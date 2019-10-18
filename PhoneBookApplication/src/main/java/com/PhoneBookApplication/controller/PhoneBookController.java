@@ -1,13 +1,16 @@
 package com.PhoneBookApplication.controller;
 
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
- 
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,5 +37,27 @@ public class PhoneBookController {
 			@ApiParam(value = "Phone Book object store in database table", required = true) @Valid @RequestBody PhoneBook phoneBook) {
 		log.info("Adding Phone Book");
 		return phoneBookService.save(phoneBook);
+	}
+	
+	@ApiOperation(value = "Find all Entries in the database")
+	@GetMapping
+	public List<PhoneBook> findEntries()
+			 {
+		log.info("finding Entries");
+		return phoneBookService.findAll();
+	}
+	
+	@ApiOperation(value = "Find phone Book")
+	@GetMapping
+	public PhoneBook getEntryById(
+			@ApiParam(value = "Phone Book object find in database table", required = true) @RequestBody Long id) {
+		return phoneBookService.findById(id);
+	}
+	
+	@ApiOperation(value = "Find phone Book")
+	@DeleteMapping
+	public void deleteEntry(
+			@ApiParam(value = "Phone Book object delete in database table", required = true) @RequestBody Long id) {
+		phoneBookService.deleteById(id);
 	}
 }
