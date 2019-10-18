@@ -1,39 +1,39 @@
 package com.PhoneBookApplication.mapper;
 
 import java.util.List;
- 
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.stereotype.Component;
-
+import org.mapstruct.ReportingPolicy;
 import com.PhoneBookApplication.dto.Entry;
 import com.PhoneBookApplication.model.EntryModel;
- 
-@Component
-@Mapper(uses = {PhoneBookMapper.class},componentModel = "spring")
-public interface EntryMapper  extends EntityMapper<Entry, EntryModel>{
+
+
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = { PhoneBookMapper.class }, componentModel = "spring")
+public interface EntryMapper extends EntityMapper<Entry, EntryModel> {
+
 	
-	 @Mapping(source="phoneBook.id", target="phoneBookId")
-	 Entry toDto(final EntryModel entryModel);
 
-	    List<Entry> toDto(final List<EntryModel> entryModel);
+	@Mapping(source = "phoneBook.id", target = "phoneBookId")
+	Entry toDto(final EntryModel entryModel);
 
-	    @Mapping(source="phoneBookId", target="phoneBook")
-	    EntryModel toEntity(final Entry entry);
+	List<Entry> toDto(final List<EntryModel> entryModel);
 
-	    List<EntryModel> toEntity(final List <Entry> Entries);
+	@Mapping(source = "phoneBookId", target = "phoneBook")
+	EntryModel toEntity(final Entry entry);
 
-	    default EntryModel fromId(final Long id) {
+	List<EntryModel> toEntity(final List<Entry> Entries);
 
-	        if (id == null) {
-	            return null;
-	        }
+	default EntryModel fromId(final Long id) {
 
-	        final EntryModel model=new EntryModel();
-	        model.setId(id);
+		if (id == null) {
+			return null;
+		}
 
-	        return model;
-	    }
+		final EntryModel model = new EntryModel();
+		model.setId(id);
+
+		return model;
+	}
 
 }

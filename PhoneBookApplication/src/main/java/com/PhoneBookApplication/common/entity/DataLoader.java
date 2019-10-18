@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import com.PhoneBookApplication.service.PhoneBookService;
 import com.PhoneBookApplication.dto.Entry;
 import com.PhoneBookApplication.dto.PhoneBook;
-import com.PhoneBookApplication.service.PhoneBookService;
 
 @Component
 public class DataLoader implements CommandLineRunner{
@@ -38,7 +37,7 @@ public class DataLoader implements CommandLineRunner{
 		entry2.setPhoneNumber("0615487654");
 		entries.add(entry2);
 
-		phoneBook.setEntries(entries);
+		phoneBook.setDtoEntries(entries);
 
 		final PhoneBook createdPhoneBook = phoneBookService.save(phoneBook);
 		System.out.println(createdPhoneBook.getName());

@@ -16,6 +16,7 @@ public class PhoneBook implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
-	private List<Entry> entries = new ArrayList<>();
+	private List<Entry> dtoEntries = new ArrayList<>();
+	
 
 }

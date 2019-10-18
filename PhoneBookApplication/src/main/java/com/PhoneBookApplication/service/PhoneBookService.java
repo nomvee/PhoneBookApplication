@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,19 +17,21 @@ import com.PhoneBookApplication.mapper.PhoneBookMapper;
 import com.PhoneBookApplication.model.EntryModel;
 import com.PhoneBookApplication.model.PhoneBookModel;
 
+@RequiredArgsConstructor
 @Service
 @Transactional
-public class PhoneBookService {
+public class PhoneBookService implements GenericService<PhoneBook>{
 
-	@Autowired
-	private  PhoneBookRepository phoneBookRepository;
-	@Autowired
-	private  EntryRepository entryRepository;
-	@Autowired
-	private  EntryMapper entryMapper;
-	@Autowired
-	private  PhoneBookMapper phoneBookMapper;
+	 
+	private  final PhoneBookRepository phoneBookRepository;
+	 
+	private final EntryRepository entryRepository;
+	 
+	private final EntryMapper entryMapper;
+	 
+	private final PhoneBookMapper phoneBookMapper;
 
+	@Override
 	public List<PhoneBook> findAll() {
 
 		final List<PhoneBookModel> phoneBookModels = phoneBookRepository.findAll();
@@ -45,7 +47,7 @@ public class PhoneBookService {
 
 		return phoneBooks;
 	}
-
+	@Override
 	public PhoneBook save(PhoneBook phoneBook) {
 
 		final PhoneBookModel phoneBookModel = phoneBookMapper.toEntity(phoneBook);
@@ -53,26 +55,27 @@ public class PhoneBookService {
 
 		final List<EntryModel> entries = new ArrayList<>();
 
-		phoneBook.getEntries().forEach(entry -> {
+		phoneBook.getDtoEntries().forEach(entry -> {
 
 			final EntryModel entryModel = entryMapper.toEntity(entry);
 			entryModel.setPhoneBook(createdphoneBookModel);
 			entries.add(entryModel);
 
 		});
-		createdphoneBookModel.setEntryModels(entries);
+		createdphoneBookModel.setModelEntries(entries);
 		entryRepository.saveAll(entries);
 
 		return phoneBookMapper.toDto(createdphoneBookModel);
 	}
 
-	public Optional<PhoneBook> findById(Long id) {
+	@Override
+	public PhoneBook findById(Long id) {
 
-		final Optional<PhoneBookModel> phoneBookModel = phoneBookRepository.findById(id);
+		 Optional<PhoneBookModel> phoneBookModel = phoneBookRepository.findById(id);
 
-		return phoneBookMapper.toDto(phoneBookModel);
+		return phoneBookMapper.toDto(phoneBookModel.get());
 	}
-
+	@Override
 	public void deleteById(Long id) {
 		phoneBookRepository.deleteById(id);
 

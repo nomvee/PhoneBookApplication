@@ -1,20 +1,16 @@
 package com.PhoneBookApplication.mapper;
 
-import java.util.Optional;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.stereotype.Component;
-
+import org.mapstruct.ReportingPolicy;
 import com.PhoneBookApplication.dto.PhoneBook;
 import com.PhoneBookApplication.model.PhoneBookModel;
 
-@Component
-@Mapper(uses = { EntryMapper.class },componentModel = "spring")
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = { EntryMapper.class }, componentModel = "spring")
 public interface PhoneBookMapper extends EntityMapper<PhoneBook, PhoneBookModel> {
 
-	@Mapping(source = "entryModels", target = "entries")
-	Optional<PhoneBook> toDto(final Optional<PhoneBookModel> phoneBookModel);
+	@Mapping(source = "modelEntries", target = "dtoEntries")
+	PhoneBook toDto(final PhoneBookModel phoneBookModel);
 
 	PhoneBookModel toEntity(final PhoneBook phoneBook);
 

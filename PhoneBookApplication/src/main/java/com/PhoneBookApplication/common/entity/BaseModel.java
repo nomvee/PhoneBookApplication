@@ -15,12 +15,12 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import lombok.Data;
+//import lombok.Data;
 
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Data
+//@Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseModel<U> {
@@ -42,6 +42,46 @@ public abstract class BaseModel<U> {
 	@LastModifiedDate
 	@Temporal(TIMESTAMP)
 	protected Date lastModifiedDate;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
 
 	 
 

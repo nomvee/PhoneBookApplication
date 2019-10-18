@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +29,10 @@ import com.PhoneBookApplication.exceptions.ContactNotFoundException;
 import com.PhoneBookApplication.exceptions.IllegalContactException;
 import com.PhoneBookApplication.service.PhoneBookService;
 
+@Slf4j
+@RequiredArgsConstructor
 @RestController
+//@RequestMapping("/api/v1/phonebook")
 public class PhoneBookController {
 
 	@Autowired
@@ -51,7 +57,7 @@ public class PhoneBookController {
 		entry2.setPhoneNumber("0615487654");
 		entries.add(entry2);
 
-		phoneBook.setEntries(entries);
+		phoneBook.setDtoEntries(entries);
 
 		final PhoneBook createdPhoneBook = phoneBookService.save(phoneBook);
 
