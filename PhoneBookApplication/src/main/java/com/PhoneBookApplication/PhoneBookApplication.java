@@ -12,8 +12,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.PhoneBookApplication.common.entity.AuditorAwareImpl;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @SpringBootApplication
 @EnableJpaRepositories
+@EnableSwagger2
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class PhoneBookApplication {
 	

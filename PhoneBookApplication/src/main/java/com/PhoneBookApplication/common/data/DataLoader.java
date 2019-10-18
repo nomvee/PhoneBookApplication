@@ -1,4 +1,4 @@
-package com.PhoneBookApplication.common.entity;
+package com.PhoneBookApplication.common.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,19 +8,26 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.PhoneBookApplication.service.PhoneBookService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import com.PhoneBookApplication.controller.PhoneBookController;
 import com.PhoneBookApplication.dto.Entry;
 import com.PhoneBookApplication.dto.PhoneBook;
 
 @Component
-public class DataLoader implements CommandLineRunner{
-	
+@Slf4j
+
+public class DataLoader implements CommandLineRunner {
+
 	@Autowired
 	private PhoneBookService phoneBookService;
 
 	@Override
 	public void run(String... args) throws Exception {
-		 
-		
+		log.info("loading initail data");
+
 		final PhoneBook phoneBook = new PhoneBook();
 		phoneBook.setName("Selby Book");
 
@@ -39,9 +46,8 @@ public class DataLoader implements CommandLineRunner{
 
 		phoneBook.setDtoEntries(entries);
 
-		final PhoneBook createdPhoneBook = phoneBookService.save(phoneBook);
-		System.out.println(createdPhoneBook.getName());
-		
+		phoneBookService.save(phoneBook);
+
 	}
 
 }
